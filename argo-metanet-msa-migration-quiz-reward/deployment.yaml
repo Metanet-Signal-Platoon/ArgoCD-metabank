@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: metanet-msa-migration-quiz-reward
+  namespace: metabank
+  labels:
+    app: metanet-msa-migration-quiz-reward
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: metanet-msa-migration-quiz-reward
+  template:
+    metadata:
+      labels:
+        app: metanet-msa-migration-quiz-reward
+    spec:
+      containers:
+        - name: metanet-msa-migration-quiz-reward
+          image: ykim73094/metanet-msa-migration-quiz-reward:1738996479
+          ports:
+            - containerPort: 3000
+          env:
+            - name: NODE_ENV
+              value: "production"
