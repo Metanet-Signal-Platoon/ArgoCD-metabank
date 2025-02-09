@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: metanet-msa-list-service
-          image: ykim73094/metanet-msa-list-service:1738996143
+          image: ykim73094/metanet-msa-list-service:1739083894
           ports:
             - containerPort: 8080
           env:
