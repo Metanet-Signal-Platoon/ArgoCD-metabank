@@ -27,9 +27,9 @@ spec:
               value: "8080"
           envFrom:
           - configMapRef:
-              name: backend-config
+              name: metanet-msa-list-service-config
           - secretRef:
-              name: backend-secrets
+              name: metanet-msa-list-service-secrets
           resources:
             requests:
               cpu: "150m"  # 0.1 vCPU (기본적으로 낮게 설정)
