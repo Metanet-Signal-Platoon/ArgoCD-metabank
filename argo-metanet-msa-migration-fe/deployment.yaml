@@ -1,0 +1,30 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Rollout
+metadata:
+  name: metanet-msa-migration-fe
+  namespace: metabank
+  labels:
+    app: metanet-msa-migration-fe
+spec:
+  replicas: 3
+  strategy:
+    blueGreen:
+      activeService: metanet-msa-migration-fe-active
+      previewService: metanet-msa-migration-fe-preview
+      autoPromotionEnabled: false  # 수동 프로모션 설정
+  selector:
+    matchLabels:
+      app: metanet-msa-migration-fe
+  template:
+    metadata:
+      labels:
+        app: metanet-msa-migration-fe
+    spec:
+      containers:
+        - name: metanet-msa-migration-fe
+          image: ykim73094/metanet-msa-migration-fe:1739001273  # 새로운 버전 배포 시 이미지 변경 필요
+          ports:
+            - containerPort: 3000
+          envFrom:
+            - configMapRef:
+                name: metanet-msa-migration-fe
