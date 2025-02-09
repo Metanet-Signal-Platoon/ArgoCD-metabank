@@ -1,2 +1,0 @@
-# ArgoCD-metabank
-ArgoCD-metabank
