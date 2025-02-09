@@ -1,5 +1,5 @@
-apiVersion: argoproj.io/v1alpha1
-kind: Rollout
+apiVersion: apps/v1
+kind: Deployment
 metadata:
   name: metanet-msa-migration-fe
   namespace: metabank
@@ -7,11 +7,6 @@ metadata:
     app: metanet-msa-migration-fe
 spec:
   replicas: 3
-  strategy:
-    blueGreen:
-      activeService: metanet-msa-migration-fe-active
-      previewService: metanet-msa-migration-fe-preview
-      autoPromotionEnabled: false  # 수동 프로모션 설정
   selector:
     matchLabels:
       app: metanet-msa-migration-fe
@@ -22,9 +17,16 @@ spec:
     spec:
       containers:
         - name: metanet-msa-migration-fe
-          image: ykim73094/metanet-msa-migration-fe:1739083254
+          image: ykim73094/metanet-msa-migration-fe:1739083894
           ports:
-            - containerPort: 3000
+            - containerPort: 8080
+          env:
+            - name: NODE_ENV
+              value: "production"
+            - name: PORT
+              value: "8080"
           envFrom:
-            - configMapRef:
-                name: metanet-msa-migration-fe
+          - configMapRef:
+              name: metanet-msa-migration-fe
+          - secretRef:
+              name: metanet-msa-migration-fe-secrets
