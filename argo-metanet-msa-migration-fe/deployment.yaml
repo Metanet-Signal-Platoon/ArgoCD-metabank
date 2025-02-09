@@ -28,5 +28,3 @@ spec:
           envFrom:
           - configMapRef:
               name: metanet-msa-migration-fe
-          - secretRef:
-              name: metanet-msa-migration-fe-secrets
