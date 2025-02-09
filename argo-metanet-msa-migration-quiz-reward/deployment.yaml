@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: metanet-msa-migration-quiz-reward
-  namespace: production
+  namespace: metabank
   labels:
     app: metanet-msa-migration-quiz-reward
 spec:
