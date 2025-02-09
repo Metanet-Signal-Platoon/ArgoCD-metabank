@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: metanet-msa-migration-be-java
+  namespace: metabank
+  labels:
+    app: metanet-msa-migration-be-java
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: metanet-msa-migration-be-java
+  template:
+    metadata:
+      labels:
+        app: metanet-msa-migration-be-java
+    spec:
+      containers:
+        - name: metanet-msa-migration-be-java
+          image: ykim73094/metanet-msa-migration-be-java:1738942031
+          ports:
+            - containerPort: 3000
+          env:
+            - name: NODE_ENV
+              value: "production"
