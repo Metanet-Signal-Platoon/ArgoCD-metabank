@@ -19,12 +19,7 @@ spec:
         - name: metanet-msa-migration-fe
           image: ykim73094/metanet-msa-migration-fe:1739085857
           ports:
-            - containerPort: 8080
-          env:
-            - name: NODE_ENV
-              value: "production"
-            - name: PORT
-              value: "8080"
+            - containerPort: 80
           envFrom:
           - configMapRef:
               name: metanet-msa-migration-fe
