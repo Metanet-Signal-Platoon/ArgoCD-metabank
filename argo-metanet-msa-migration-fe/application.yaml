@@ -4,7 +4,7 @@ metadata:
   name: metanet-msa-migration-fe  # ArgoCD에서 관리하는 앱 이름
   namespace: metabank
 spec:
-  project: metanet-msa-migration-fe
+  project: metabank
   source:
     repoURL: https://github.com/Metanet-Signal-Platoon/argo-metanet-msa-migration-fe.git  # GitHub 리포지토리 URL
     targetRevision: main  # main 브랜치를 자동 Sync
