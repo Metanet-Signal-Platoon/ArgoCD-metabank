@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: metanet-msa-migration-be-java
-          image: ykim73094/metanet-msa-migration-be-java:1739097470
+          image: ykim73094/metanet-msa-migration-be-java:1739098491
           ports:
             - containerPort: 8080
           env:
