@@ -2,11 +2,11 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: metanet-msa-migration-quiz-reward
-  namespace: metabank
+  namespace: production
   labels:
     app: metanet-msa-migration-quiz-reward
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
       app: metanet-msa-migration-quiz-reward
@@ -19,7 +19,19 @@ spec:
         - name: metanet-msa-migration-quiz-reward
           image: ykim73094/metanet-msa-migration-quiz-reward:1739089676
           ports:
-            - containerPort: 3000
+            - containerPort: 8080
           env:
             - name: NODE_ENV
               value: "production"
+            - name: PORT
+              value: "8080"
+          envFrom:
+          - configMapRef:
+              name: backend-config
+          - secretRef:
+              name: backend-secrets
+          resources:
+            requests:
+              cpu: "150m"  # 0.1 vCPU (기본적으로 낮게 설정)
+            limits:
+              cpu: "250m"  # 0.5 vCPU (최대 사용량 제한)
