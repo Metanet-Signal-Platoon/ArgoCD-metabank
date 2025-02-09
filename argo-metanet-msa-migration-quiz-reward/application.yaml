@@ -6,7 +6,7 @@ metadata:
 spec:
   project: metanet-msa-migration-quiz-reward
   source:
-    repoURL: https://github.com/Metanet-Signal-Platoon/argo-metanet-msa-migration-quiz-reward.git  # GitHub 리포지토리 URL
+    repoURL: https://github.com/Metanet-Signal-Platoon/ArgoCD-metabank.git  # GitHub 리포지토리 URL
     targetRevision: main  # main 브랜치를 자동 Sync
     path: .  # 리포지토리 내에서 Kubernetes 배포 파일이 있는 경로
   destination:
