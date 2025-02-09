@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: metanet-msa-migration-quiz-reward
-          image: ykim73094/metanet-msa-migration-quiz-reward:1739100967
+          image: ykim73094/metanet-msa-migration-quiz-reward:1739101406
           ports:
             - containerPort: 8080
           env:
