@@ -6,7 +6,7 @@ metadata:
   labels:
     app: metanet-msa-migration-quiz-reward
 spec:
-  replicas: 1
+  replicas: 3
   selector:
     matchLabels:
       app: metanet-msa-migration-quiz-reward
