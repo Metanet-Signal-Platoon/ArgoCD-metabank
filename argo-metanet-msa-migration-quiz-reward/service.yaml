@@ -8,6 +8,6 @@ spec:
     app: metanet-msa-migration-quiz-reward
   ports:
     - protocol: TCP
-      port: 80
-      targetPort: 3000
-  type: LoadBalancer
+      port: 8080
+      targetPort: 8080
+  type: ClusterIP
