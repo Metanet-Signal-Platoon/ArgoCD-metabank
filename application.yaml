@@ -1,0 +1,21 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: metanet-msa-list-service  # ArgoCD에서 관리하는 앱 이름
+  namespace: metabank
+spec:
+  project: metanet-msa-list-service
+  source:
+    repoURL: https://github.com/Metanet-Signal-Platoon/argo-metanet-msa-list-service.git  # GitHub 리포지토리 URL
+    targetRevision: main  # main 브랜치를 자동 Sync
+    path: .  # 리포지토리 내에서 Kubernetes 배포 파일이 있는 경로
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: metabank
+  syncPolicy:
+    automated:
+      prune: true     # Git과 불일치하는 리소스를 자동 삭제
+      selfHeal: true  # 클러스터 변경 사항을 자동으로 복구
+    syncOptions:
+      - CreateNamespace=true  # 네임스페이스가 없을 경우 자동 생성
+      - ApplyOutOfSyncOnly=true  # 변경된 리소스만 업데이트 (즉시 Synced 상태로 변경)
