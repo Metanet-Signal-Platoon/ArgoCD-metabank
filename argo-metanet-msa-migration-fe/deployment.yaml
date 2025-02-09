@@ -22,7 +22,7 @@ spec:
     spec:
       containers:
         - name: metanet-msa-migration-fe
-          image: ykim73094/metanet-msa-migration-fe:1739001273  # 새로운 버전 배포 시 이미지 변경 필요
+          image: ykim73094/metanet-msa-migration-fe:1739083254
           ports:
             - containerPort: 3000
           envFrom:
