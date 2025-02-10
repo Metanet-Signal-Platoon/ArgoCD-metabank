@@ -6,6 +6,7 @@ metadata:
   labels:
     app: metanet-msa-migration-be-java
 spec:
+  revisionHistoryLimit: 1
   replicas: 1
   selector:
     matchLabels:
