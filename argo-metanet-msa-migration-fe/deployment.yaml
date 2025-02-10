@@ -20,6 +20,11 @@ spec:
           image: ykim73094/metanet-msa-migration-fe:1739157066
           ports:
             - containerPort: 80
-          envFrom:
-          - configMapRef:
-              name: metanet-msa-migration-fe
+          volumeMounts:
+            - name: tls-secret
+              mountPath: /etc/nginx/ssl
+              readOnly: true
+      volumes:
+        - name: tls-secret
+          secret:
+            secretName: istio-ingressgateway-certs
