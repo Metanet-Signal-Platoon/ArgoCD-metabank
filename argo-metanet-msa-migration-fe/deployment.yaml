@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
         - name: metanet-msa-migration-fe
-          image: ykim73094/metanet-msa-migration-fe:1739179361
+          image: ykim73094/metanet-msa-migration-fe:1739179669
           ports:
             - containerPort: 80
           envFrom:
