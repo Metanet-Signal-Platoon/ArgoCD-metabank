@@ -6,7 +6,6 @@ metadata:
   labels:
     app: metanet-msa-migration-fe
 spec:
-  revisionHistoryLimit: 1
   replicas: 1
   selector:
     matchLabels:
