@@ -8,6 +8,6 @@ spec:
     app: metanet-msa-migration-be-java
   ports:
     - protocol: TCP
-      port: 80
+      port: 8080
       targetPort: 3000
   type: ClusterIP
