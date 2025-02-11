@@ -12,6 +12,7 @@ spec:
     helm:
       valueFiles:
         - values.yaml  # 개발 환경 전용 values 파일 적용
+        - values-dev.yaml
   destination:
     server: https://kubernetes.default.svc
     namespace: dev-metabank
