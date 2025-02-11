@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: metanet-msa-list-service-config
+  namespace: metabank
+data:
+  DB_HOST: "10.0.1.5"
+  DB_PORT: "3306"
+  DB_DATABASE: "list_db"

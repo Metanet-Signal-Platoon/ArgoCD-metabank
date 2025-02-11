@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "{{ include "argo-metanet-msa-list-service-dev.fullname" . }}-test-connection"
+  labels:
+    {{- include "argo-metanet-msa-list-service-dev.labels" . | nindent 4 }}
+  annotations:
+    "helm.sh/hook": test
+spec:
+  containers:
+    - name: wget
+      image: busybox
+      command: ['wget']
+      args: ['{{ include "argo-metanet-msa-list-service-dev.fullname" . }}:{{ .Values.service.port }}']
+  restartPolicy: Never
