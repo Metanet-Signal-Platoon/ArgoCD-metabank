@@ -8,8 +8,8 @@ image:
 # Image Pull Secrets (ACR 접근을 위한 설정, 필요시 추가)
 imagePullSecrets: []
 # 예시:
-# imagePullSecrets:
-#   - name: acr-secret
+ imagePullSecrets:
+   - name: acr-secret
 
 # 서비스 계정 설정
 serviceAccount:
