@@ -1,0 +1,72 @@
+# Replica 설정 (dev 환경에서는 1개, 운영에서는 3개)
+replicaCount: 1
+
+# 컨테이너 이미지 설정 (Azure ACR 사용)
+image:
+  repository: metabank.azurecr.io/metanet-msa-migration-fe
+  pullPolicy: IfNotPresent
+  tag: "1739258315"
+
+# Image Pull Secrets (ACR 접근을 위한 설정, 필요시 추가)
+imagePullSecrets: []
+# 예시:
+ imagePullSecrets:
+   - name: acr-secret
+
+# 서비스 계정 설정
+serviceAccount:
+  create: true
+  automount: true
+  annotations: {}
+  name: ""
+
+# Pod Annotations & Labels
+podAnnotations: {}
+podLabels: {}
+
+# Pod Security Context (선택)
+podSecurityContext: {}
+
+# 컨테이너 Security Context (선택)
+securityContext: {}
+
+# Service 설정
+service:
+  type: ClusterIP  # 내부 네트워크용
+  port: 80  # 포트 변경
+  
+  tls: []
+  #  - secretName: chart-example-tls
+  #    hosts:
+  #      - metanet-dev.example.com
+
+# 리소스 설정 (개발 환경 기준)
+resources:
+  requests:
+    cpu: "250m"
+    memory: "512Mi"
+  limits:
+    cpu: "500m"
+    memory: "1024Mi"
+
+# Liveness & Readiness Probes
+livenessProbe:
+  httpGet:
+    path: /
+    port: 8080
+readinessProbe:
+  httpGet:
+    path: /
+    port: 8080
+
+# 자동 확장 (선택)
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 5
+  targetCPUUtilizationPercentage: 80
+
+# 노드 선택 및 Tolerations
+nodeSelector: {}
+tolerations: []
+affinity: {}
