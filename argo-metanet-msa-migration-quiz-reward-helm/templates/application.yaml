@@ -11,7 +11,7 @@ spec:
     path: argo-metanet-msa-migration-quiz-reward-helm  # Helm 차트 경로
     helm:
       valueFiles:
-      - values-prod.yaml
+      - values-dev.yaml
   destination:
     server: https://kubernetes.default.svc
     namespace: dev-metabank
