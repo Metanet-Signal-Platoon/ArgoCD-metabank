@@ -5,7 +5,7 @@ replicaCount: 1
 image:
   repository: metabank.azurecr.io/metanet-msa-migration-fe
   pullPolicy: IfNotPresent
-  tag: "1739330946"
+  tag: "1739331190"
 
 # Image Pull Secrets (ACR 접근을 위한 설정, 필요시 추가)
 imagePullSecrets: []
