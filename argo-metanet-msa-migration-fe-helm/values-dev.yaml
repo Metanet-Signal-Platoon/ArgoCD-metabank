@@ -3,6 +3,8 @@ replicaCount: 1
 
 # 컨테이너 이미지 설정 (Azure ACR 사용)
 image:
+  repository: metabank.azurecr.io/metanet-msa-migration-fe
+  pullPolicy: IfNotPresent
   tag: "1739370148"
 
 # Image Pull Secrets (ACR 접근을 위한 설정, 필요시 추가)
