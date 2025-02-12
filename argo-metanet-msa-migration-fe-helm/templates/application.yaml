@@ -8,7 +8,7 @@ spec:
   source:
     repoURL: https://github.com/Metanet-Signal-Platoon/ArgoCD-metabank.git  # 올바른 GitHub 리포지토리 URL
     targetRevision: dev  # dev 브랜치를 자동 Sync
-    path: argo-metanet-msa-migration-fe-dev  # Helm 차트 경로
+    path: argo-metanet-msa-migration-fe-helm  # Helm 차트 경로
     helm:
       valueFiles:
       - values-prod.yaml
