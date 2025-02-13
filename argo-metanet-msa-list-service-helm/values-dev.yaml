@@ -1,11 +1,11 @@
 # Replica 설정 (dev 환경에서는 1개, 운영에서는 3개)
-replicaCount: 5
+replicaCount: 1
 
 # 컨테이너 이미지 설정 (Azure ACR 사용)
 image:
   repository: metabank.azurecr.io/metanet-msa-list-service
   pullPolicy: IfNotPresent
-  tag: "1739432487"
+  tag: "1739432855"
 
 # 환경 변수 설정
 env:
@@ -105,11 +105,3 @@ secret:
   data:
     DB_USERNAME: "metanet"
     DB_PASSWORD: "Abcd1234!"
-
-canary:
-  steps:
-    - weight: 10   # Canary 트래픽 10%
-      pause: 30s   # 30초 대기
-    - weight: 50   # Canary 트래픽 50%
-      pause: 30s   # 30초 대기
-
