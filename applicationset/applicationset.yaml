@@ -2,7 +2,7 @@ apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
   name: metanet-msa-migration-be-java-set
-  namespace: argocd  # ✅ ApplicationSet은 `argocd` 네임스페이스에서 실행됨
+  namespace: argocd
 spec:
   generators:
     - list:
@@ -21,13 +21,13 @@ spec:
             valuesFile: values-prod.yaml
   template:
     metadata:
-      name: metanet-msa-migration-be-java-{{ .environment }}
+      name: metanet-msa-migration-be-java-{{ .environment }}-{{ .namespace }}  # ✅ 중복 방지
     spec:
       project: "{{ .project }}"
       source:
         repoURL: https://github.com/Metanet-Signal-Platoon/ArgoCD-metabank.git
         targetRevision: main
-        path: argo-metanet-msa-migration-be-java-helm  # ✅ 올바른 경로 설정
+        path: argo-metanet-msa-migration-be-java-helm
         helm:
           valueFiles:
             - "values.yaml"
