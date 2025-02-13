@@ -3,7 +3,7 @@ replicaCount: 1
 
 # 컨테이너 이미지 설정 (Azure ACR 사용)
 image:
-  repository: metabank.azurecr.io/metanet-msa-migration-be-java
+  repository: metabank.azurecr.io/metanet-msa-list-service
   pullPolicy: IfNotPresent
   tag: "1739432855"
 
@@ -40,7 +40,7 @@ securityContext: {}
 
 # Service 설정
 service:
-  name: metanet-msa-migration-be-java
+  name: metanet-msa-list-service
   type: ClusterIP
   port: 8080  # ✅ Spring Boot 실행 포트에 맞춤
 
@@ -93,7 +93,7 @@ affinity: {}
 
 # ConfigMap 설정 (환경별 DB 정보)
 configMap:
-  name: metanet-msa-migration-be-java-config
+  name: metanet-msa-list-service-config
   data:
     DB_HOST: "10.0.1.8"
     DB_PORT: "3306"
@@ -101,7 +101,7 @@ configMap:
 
 # Secret 설정 (DB 자격 증명)
 secret:
-  name: metanet-msa-migration-be-java-secrets
+  name: metanet-msa-list-service-secrets
   data:
     DB_USERNAME: "metanet"
     DB_PASSWORD: "Abcd1234!"
