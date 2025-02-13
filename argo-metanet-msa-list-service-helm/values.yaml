@@ -9,3 +9,8 @@ environment: ""
 namespace: ""
 project: ""
 valuesFile: ""
+
+# Service 기본값 추가 ✅
+service:
+  type: ClusterIP
+  port: 80  # 기본 포트 추가 ✅
