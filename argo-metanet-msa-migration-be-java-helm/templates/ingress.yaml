@@ -2,9 +2,9 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: {{ include "argo-metanet-msa-migration-be-java-dev.fullname" . }}
+  name: {{ include "argo-metanet-msa-migration-be-java-helm.fullname" . }}
   labels:
-    {{- include "argo-metanet-msa-migration-be-java-dev.labels" . | nindent 4 }}
+    {{- include "argo-metanet-msa-migration-be-java-helm.labels" . | nindent 4 }}
   {{- with .Values.ingress.annotations }}
   annotations:
     {{- toYaml . | nindent 4 }}
@@ -35,7 +35,7 @@ spec:
             {{- end }}
             backend:
               service:
-                name: {{ include "argo-metanet-msa-migration-be-java-dev.fullname" $ }}
+                name: {{ include "argo-metanet-msa-migration-be-java-helm.fullname" $ }}
                 port:
                   number: {{ $.Values.service.port }}
           {{- end }}
