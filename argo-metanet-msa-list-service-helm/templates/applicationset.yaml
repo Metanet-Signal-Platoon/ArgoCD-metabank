@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: metanet-msa-migration-be-java-set
+  name: metanet-msa-list-service-set
   namespace: argocd  # Argo CD가 설치된 네임스페이스
 spec:
   generators:
@@ -21,19 +21,20 @@ spec:
             valuesFile: values-prod.yaml
   template:
     metadata:
-      name: metanet-msa-migration-be-java-{{env}}
+      name: metanet-msa-list-service-{{ env }}
     spec:
-      project: "{{project}}"
+      project: "{{ project }}"
       source:
         repoURL: https://github.com/Metanet-Signal-Platoon/ArgoCD-metabank.git
         targetRevision: main  # ✅ 모든 환경이 main 브랜치를 사용하도록 수정
-        path: argo-metanet-msa-migration-be-java-helm
+        path: argo-metanet-msa-list-service-helm
         helm:
           valueFiles:
-            - "{{valuesFile}}"  # ✅ 환경별 values.yaml 적용
+            - "values.yaml"  # ✅ 기본 values.yaml 추가
+            - "{{ valuesFile }}"  # ✅ 환경별 values.yaml 적용
       destination:
         server: https://kubernetes.default.svc
-        namespace: "{{namespace}}"
+        namespace: "{{ namespace }}"
       syncPolicy:
         automated:
           prune: true
