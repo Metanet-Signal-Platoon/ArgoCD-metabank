@@ -13,8 +13,8 @@ env:
     value: "dev"
 
 # Image Pull Secrets (ACR 접근을 위한 설정, 필요시 추가)
-#imagePullSecrets:
-#  - name: acr-secret
+imagePullSecrets:
+  - name: acr-secret
 
 # 서비스 계정 설정
 serviceAccount:
@@ -36,12 +36,12 @@ securityContext: {}
 # Service 설정
 service:
   type: ClusterIP
-  port: 80  # ⚠️ 숫자로 직접 기입
+  port: 8080  # ✅ Spring Boot 실행 포트에 맞춤
 
 tls: []
-  #  - secretName: chart-example-tls
-  #    hosts:
-  #      - metanet-dev.example.com
+#  - secretName: chart-example-tls
+#    hosts:
+#      - metanet-dev.example.com
 
 # 리소스 설정 (개발 환경 기준)
 resources:
@@ -56,11 +56,11 @@ resources:
 livenessProbe:
   httpGet:
     path: /
-    port: 80  # ⚠️ 직접 숫자로 입력
+    port: 8080  # ✅ Spring Boot 실행 포트에 맞춤
 readinessProbe:
   httpGet:
     path: /
-    port: 80  # ⚠️ 직접 숫자로 입력
+    port: 8080  # ✅ Spring Boot 실행 포트에 맞춤
 
 # 자동 확장 (선택)
 autoscaling:
