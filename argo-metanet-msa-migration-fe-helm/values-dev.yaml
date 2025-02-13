@@ -44,15 +44,15 @@ service:
 
 # Backend Services 설정 (Nginx에서 백엔드로 프록시 가능하도록)
 backendServices:
-  - name: metanet-msa-list-service
+  - name: metanet-msa-migration-be-java-dev-argo-metanet-msa-migration-be
     namespace: metabank-dev
     port: 8080
 
-  - name: metanet-msa-migration-be-java
+  - name: metanet-msa-list-service-dev-argo-metanet-msa-list-service-helm
     namespace: metabank-dev
     port: 8080
 
-  - name: metanet-msa-migration-quiz-reward
+  - name: metanet-msa-migration-quiz-reward-dev-argo-metanet-msa-migratio
     namespace: metabank-dev
     port: 8080
 
