@@ -1,1 +1,11 @@
+# 기본 값 (환경별 values-*.yaml에서 오버라이드됨)
 replicaCount: 1
+
+image:
+  repository: ""
+  tag: ""
+
+environment: ""
+namespace: ""
+project: ""
+valuesFile: ""
