@@ -21,7 +21,7 @@ spec:
             valuesFile: values-prod.yaml
   template:
     metadata:
-      name: metanet-msa-list-service-{{env}}
+      name: metanet-msa-list-service-{{ .Values.env }}
     spec:
       project: "{{project}}"
       source:
