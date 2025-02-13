@@ -5,9 +5,9 @@ replicaCount: 1
 image:
   repository: metabank.azurecr.io/metanet-msa-migration-fe
   pullPolicy: IfNotPresent
-  tag: "1739450196"
+  tag: "1739373904"
 
-environment: dev
+environment: qa
 
 # Image Pull Secrets (ACR 접근을 위한 설정, 필요시 추가)
 imagePullSecrets: []
@@ -35,45 +35,43 @@ securityContext: {}
 # Service 설정
 service:
   type: ClusterIP  # 내부 네트워크용
-  port: 80  # 포트 변경
-  
+  port: 8080  # 포트 변경
+
+# Ingress 설정 (선택)
+ingress:
+  enabled: true  # Ingress 활성화
+  className: "nginx"
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    nginx.ingress.kubernetes.io/rewrite-target: /
+  hosts:
+    - host: metanet-dev.example.com
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
   tls: []
   #  - secretName: chart-example-tls
   #    hosts:
   #      - metanet-dev.example.com
 
-# Backend Services 설정 (Nginx에서 백엔드로 프록시 가능하도록)
-backendServices:
-  - name: metanet-msa-migration-be-java-dev-argo-metanet-msa-migration-be
-    namespace: metabank-dev
-    port: 8080
-
-  - name: metanet-msa-list-service-dev-argo-metanet-msa-list-service-helm
-    namespace: metabank-dev
-    port: 8080
-
-  - name: metanet-msa-migration-quiz-reward-dev-argo-metanet-msa-migratio
-    namespace: metabank-dev
-    port: 8080
-
 # 리소스 설정 (개발 환경 기준)
 resources:
   requests:
-    cpu: 150m
-    memory: 128Mi
+    cpu: "250m"
+    memory: "512Mi"
   limits:
-    cpu: 300m
-    memory: 512Mi
+    cpu: "500m"
+    memory: "1024Mi"
 
 # Liveness & Readiness Probes
 livenessProbe:
   httpGet:
     path: /
-    port: 80
+    port: 8080
 readinessProbe:
   httpGet:
     path: /
-    port: 80
+    port: 8080
 
 # 자동 확장 (선택)
 autoscaling:
@@ -81,6 +79,12 @@ autoscaling:
   minReplicas: 1
   maxReplicas: 5
   targetCPUUtilizationPercentage: 80
+
+# 추가 환경 변수 설정
+env:
+  ENVIRONMENT: dev
+  DATABASE_URL: "jdbc:mysql://metanet-db:3306/dev-db"
+  REDIS_HOST: "metanet-redis"
 
 # 노드 선택 및 Tolerations
 nodeSelector: {}
