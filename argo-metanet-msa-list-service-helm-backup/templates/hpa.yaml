@@ -2,14 +2,14 @@
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
-  name: {{ include "argo-metanet-msa-list-service-helm.fullname" . }}
+  name: {{ include "..fullname" . }}
   labels:
-    {{- include "argo-metanet-msa-list-service-helm.labels" . | nindent 4 }}
+    {{- include "..labels" . | nindent 4 }}
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: {{ include "argo-metanet-msa-list-service-helm.fullname" . }}
+    name: {{ include "..fullname" . }}
   minReplicas: {{ .Values.autoscaling.minReplicas }}
   maxReplicas: {{ .Values.autoscaling.maxReplicas }}
   metrics:
