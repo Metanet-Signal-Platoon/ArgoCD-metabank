@@ -1,4 +1,4 @@
-# Replica 설정 (dev 환경에서는 1개, 운영에서는 3개)
+# Replica 설정 (prod 환경에서는 1개, 운영에서는 3개)
 replicaCount: 1
 
 # 컨테이너 이미지 설정 (Azure ACR 사용)
@@ -10,7 +10,7 @@ image:
 # 환경 변수 설정
 env:
   - name: ENVIRONMENT
-    value: "dev"
+    value: "prod"
   - name: MANAGEMENT_ENDPOINTS_WEB_EXPOSURE_INCLUDE  # ✅ Actuator 활성화
     value: "*"
   - name: MANAGEMENT_ENDPOINT_HEALTH_SHOW_DETAILS
@@ -49,7 +49,7 @@ tls: []
 # tls:
 #   - secretName: chart-example-tls
 #     hosts:
-#       - metanet-dev.example.com
+#       - metanet-prod.example.com
 
 # 리소스 설정 (개발 환경 기준)
 resources:
