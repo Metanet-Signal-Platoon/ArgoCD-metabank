@@ -1,15 +1,13 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "argo-metanet-msa-migration-fe-dev.fullname" . }}
-  labels:
-    {{- include "argo-metanet-msa-migration-fe-dev.labels" . | nindent 4 }}
+  name: {{ include "argo-metanet-msa-migration-fe-helm.fullname" . }}
+  namespace: {{ .Values.namespace }}
 spec:
-  type: {{ .Values.service.type }}
-  ports:
-    - port: {{ .Values.service.port }}
-      targetPort: http
-      protocol: TCP
-      name: http
   selector:
-    {{- include "argo-metanet-msa-migration-fe-dev.selectorLabels" . | nindent 4 }}
+    app: {{ include "argo-metanet-msa-migration-fe-helm.name" . }}
+  ports:
+    - protocol: TCP
+      port: {{ .Values.service.port }}
+      targetPort: {{ .Values.service.port }}
+  type: {{ .Values.service.type }}
