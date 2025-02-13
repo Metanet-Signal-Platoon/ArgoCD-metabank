@@ -1,0 +1,107 @@
+# Replica 설정 (prod 환경에서는 1개, 운영에서는 3개)
+replicaCount: 1
+
+# 컨테이너 이미지 설정 (Azure ACR 사용)
+image:
+  repository: metabank.azurecr.io/metanet-msa-migration-be-java
+  pullPolicy: IfNotPresent
+  tag: "1739430998"
+
+# 환경 변수 설정
+env:
+  - name: ENVIRONMENT
+    value: "prod"
+  - name: MANAGEMENT_ENDPOINTS_WEB_EXPOSURE_INCLUDE  # ✅ Actuator 활성화
+    value: "*"
+  - name: MANAGEMENT_ENDPOINT_HEALTH_SHOW_DETAILS
+    value: "always"
+
+# Image Pull Secrets (ACR 접근을 위한 설정, 필요시 추가)
+imagePullSecrets: []
+# imagePullSecrets:
+#   - name: acr-secret
+
+# 서비스 계정 설정
+serviceAccount:
+  create: true
+  automount: true
+  annotations: {}
+  name: ""
+
+# Pod Annotations & Labels
+podAnnotations: {}
+podLabels: {}
+
+# Pod Security Context (선택)
+podSecurityContext: {}
+
+# 컨테이너 Security Context (선택)
+securityContext: {}
+
+# Service 설정
+service:
+  name: metanet-msa-migration-be-java
+  type: ClusterIP
+  port: 8080  # ✅ Spring Boot 실행 포트에 맞춤
+
+# TLS 설정 (필요할 경우 활성화)
+tls: []
+# tls:
+#   - secretName: chart-example-tls
+#     hosts:
+#       - metanet-prod.example.com
+
+# 리소스 설정 (개발 환경 기준)
+resources:
+  requests:
+    cpu: 250m
+    memory: 512Mi
+  limits:
+    cpu: 500m
+    memory: 1024Mi
+
+# Liveness & Readiness Probes (Actuator 헬스 체크 활용)
+livenessProbe:
+  httpGet:
+    path: /actuator/health/liveness  # ✅ `/liveness` 엔드포인트로 변경 (Spring Boot 3.x 권장)
+    port: 8080
+  initialDelaySeconds: 15  # ✅ 애플리케이션 기동 고려 (최적화)
+  periodSeconds: 10
+  timeoutSeconds: 3
+  failureThreshold: 3
+
+readinessProbe:
+  httpGet:
+    path: /actuator/health/readiness  # ✅ `/readiness` 엔드포인트로 변경 (Spring Boot 3.x 권장)
+    port: 8080
+  initialDelaySeconds: 20  # ✅ Spring Boot 완전 기동까지 충분한 시간 제공
+  periodSeconds: 10
+  timeoutSeconds: 3
+  failureThreshold: 3
+
+# 자동 확장 (선택)
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 5
+  targetCPUUtilizationPercentage: 80
+
+# 노드 선택 및 Tolerations
+nodeSelector: {}
+tolerations: []
+affinity: {}
+
+# ConfigMap 설정 (환경별 DB 정보)
+configMap:
+  name: metanet-msa-migration-be-java-config
+  data:
+    DB_HOST: "10.0.1.8"
+    DB_PORT: "3306"
+    DB_DATABASE: "my_database"
+
+# Secret 설정 (DB 자격 증명)
+secret:
+  name: metanet-msa-migration-be-java-secrets
+  data:
+    DB_USERNAME: "metanet"
+    DB_PASSWORD: "Abcd1234!"
