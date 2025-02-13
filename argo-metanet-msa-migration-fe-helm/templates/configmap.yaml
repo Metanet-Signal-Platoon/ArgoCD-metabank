@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-nginx-config
+  namespace: {{ .Release.Namespace }}
+data:
+  default.conf: |
+    upstream backend {
+        server {{ .Values.backendService.name }}.{{ .Release.Namespace }}.svc.cluster.local:{{ .Values.backendService.port }};
+    }
+
+    server {
+        listen 80;
+        location / {
+            proxy_pass http://backend;
+        }
+    }
