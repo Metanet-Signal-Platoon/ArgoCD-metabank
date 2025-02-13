@@ -1,5 +1,5 @@
 # Replica 설정 (dev 환경에서는 1개, 운영에서는 3개)
-replicaCount: 1
+replicaCount: 5
 
 # 컨테이너 이미지 설정 (Azure ACR 사용)
 image:
@@ -105,3 +105,12 @@ secret:
   data:
     DB_USERNAME: "metanet"
     DB_PASSWORD: "Abcd1234!"
+
+# Canary 배포 설정 (Argo Rollouts 사용)
+canary:
+  steps:
+    - weight: 10   # Canary 트래픽 10%
+      pause: 30s   # 30초 대기
+    - weight: 50   # Canary 트래픽 50%
+      pause: 30s   # 30초 대기
+    - setWeight: 100  # Canary 트래픽 100%로 변경 (기존 버전 제거)
