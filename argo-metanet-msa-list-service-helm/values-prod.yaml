@@ -1,4 +1,10 @@
-# Replica 설정 (dev 환경에서는 1개, 운영에서는 3개)
+# 환경 정보
+env: prod
+namespace: metabank-prod
+project: metabank-prod
+valuesFile: values-prod.yaml
+
+# Replica 설정 (prod 환경에서는 1개, 운영에서는 3개)
 replicaCount: 1
 
 # 컨테이너 이미지 설정 (Azure ACR 사용)
@@ -7,13 +13,11 @@ image:
   pullPolicy: IfNotPresent
   tag: "1739372847"
 
-environment: prod
-
 # Image Pull Secrets (ACR 접근을 위한 설정, 필요시 추가)
 imagePullSecrets: []
 # 예시:
- imagePullSecrets:
-   - name: acr-secret
+imagePullSecrets:
+  - name: acr-secret
 
 # 서비스 계정 설정
 serviceAccount:
@@ -23,8 +27,10 @@ serviceAccount:
   name: ""
 
 # Pod Annotations & Labels
-podAnnotations: {}
-podLabels: {}
+podAnnotations:
+  environment: "prod"  # ✅ 환경 태그 추가
+podLabels:
+  environment: "prod"  # ✅ 환경 태그 추가
 
 # Pod Security Context (선택)
 podSecurityContext: {}
@@ -36,11 +42,11 @@ securityContext: {}
 service:
   type: ClusterIP  # 내부 네트워크용
   port: 80  # 포트 변경
-  
+
   tls: []
   #  - secretName: chart-example-tls
   #    hosts:
-  #      - metanet-dev.example.com
+  #      - metanet-prod.example.com
 
 # 리소스 설정 (개발 환경 기준)
 resources:
@@ -72,3 +78,10 @@ autoscaling:
 nodeSelector: {}
 tolerations: []
 affinity: {}
+
+# 환경 변수 설정
+envVars:
+  - name: ENVIRONMENT
+    value: "prod"  # ✅ 환경 변수 추가
+  - name: SERVICE_NAME
+    value: "metanet-msa-list-service"
