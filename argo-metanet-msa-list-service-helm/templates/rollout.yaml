@@ -31,8 +31,10 @@ spec:
   strategy:
     canary:
       steps:
-        - setWeight: {{ .Values.canary.steps[0].weight }}
-        - pause: {duration: {{ .Values.canary.steps[0].pause }}}
-        - setWeight: {{ .Values.canary.steps[1].weight }}
-        - pause: {duration: {{ .Values.canary.steps[1].pause }}}
+        # Canary 배포 단계를 동적으로 처리
+        {{- range .Values.canary.steps }}
+        - setWeight: {{ .weight }}
+        - pause:
+            duration: {{ .pause }}
+        {{- end }}
         - setWeight: 100  # Canary 트래픽 100%로 변경 (기존 버전 제거)
