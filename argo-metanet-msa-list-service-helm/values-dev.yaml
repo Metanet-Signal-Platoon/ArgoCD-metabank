@@ -7,10 +7,6 @@ image:
   pullPolicy: IfNotPresent
   tag: "1739375182"
 
-# Image Pull Secrets (ACR 접근을 위한 설정, 필요시 추가)
-imagePullSecrets:
-  - name: acr-secret  # ✅ 값이 없을 경우 오류 방지
-
 # 서비스 계정 설정
 serviceAccount:
   create: true
