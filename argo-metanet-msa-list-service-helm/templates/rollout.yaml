@@ -1,5 +1,5 @@
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: argoproj.io/v1alpha1
+kind: Rollout
 metadata:
   name: {{ include "argo-metanet-msa-list-service-helm.fullname" . }}
   namespace: {{ .Values.namespace }}
@@ -28,3 +28,11 @@ spec:
                 name: {{ .Values.secret.name }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
+  strategy:
+    canary:
+      steps:
+        - setWeight: {{ .Values.canary.steps[0].weight }}
+        - pause: {duration: {{ .Values.canary.steps[0].pause }}}
+        - setWeight: {{ .Values.canary.steps[1].weight }}
+        - pause: {duration: {{ .Values.canary.steps[1].pause }}}
+        - setWeight: 100  # Canary 트래픽 100%로 변경 (기존 버전 제거)
