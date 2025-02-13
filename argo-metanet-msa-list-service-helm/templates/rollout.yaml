@@ -31,10 +31,9 @@ spec:
   strategy:
     canary:
       steps:
-        # Canary 배포 단계를 동적으로 처리
         {{- range .Values.canary.steps }}
-        - setWeight: {{ .weight }}
+        - setWeight: {{ .weight }}   # Canary 배포 비율 설정
         - pause:
-            duration: {{ .pause }}
+            duration: {{ .pause }}  # 대기 시간 설정
         {{- end }}
         - setWeight: 100  # Canary 트래픽 100%로 변경 (기존 버전 제거)
