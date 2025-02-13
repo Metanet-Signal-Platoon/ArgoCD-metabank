@@ -11,10 +11,15 @@ image:
 env:
   - name: ENVIRONMENT
     value: "dev"
+  - name: MANAGEMENT_ENDPOINTS_WEB_EXPOSURE_INCLUDE  # ✅ Actuator 활성화
+    value: "*"
+  - name: MANAGEMENT_ENDPOINT_HEALTH_SHOW_DETAILS
+    value: "always"
 
 # Image Pull Secrets (ACR 접근을 위한 설정, 필요시 추가)
-#imagePullSecrets:
-#  - name: acr-secret
+imagePullSecrets: []  # 필요하면 설정
+# imagePullSecrets:
+#   - name: acr-secret
 
 # 서비스 계정 설정
 serviceAccount:
@@ -38,10 +43,12 @@ service:
   type: ClusterIP
   port: 8080  # ✅ Spring Boot 실행 포트에 맞춤
 
+# TLS 설정 (필요할 경우 활성화)
 tls: []
-#  - secretName: chart-example-tls
-#    hosts:
-#      - metanet-dev.example.com
+# tls:
+#   - secretName: chart-example-tls
+#     hosts:
+#       - metanet-dev.example.com
 
 # 리소스 설정 (개발 환경 기준)
 resources:
@@ -52,20 +59,20 @@ resources:
     cpu: 500m
     memory: 1024Mi
 
-# Liveness & Readiness Probes
+# Liveness & Readiness Probes (Actuator 헬스 체크 활용)
 livenessProbe:
   httpGet:
-    path: /actuator/health  # ✅ Spring Boot Actuator 헬스 체크 엔드포인트로 변경
+    path: /actuator/health  # ✅ Actuator health endpoint로 변경
     port: 8080
-  initialDelaySeconds: 15  # ✅ 앱이 시작될 시간을 벌기 위해 초기 지연 추가
+  initialDelaySeconds: 20  # ✅ 애플리케이션 기동 고려
   periodSeconds: 10
   failureThreshold: 5
 
 readinessProbe:
   httpGet:
-    path: /actuator/health  # ✅ Readiness Probe도 Actuator 경로로 변경
+    path: /actuator/health  # ✅ Actuator health endpoint로 변경
     port: 8080
-  initialDelaySeconds: 20  # ✅ Spring Boot 앱이 충분히 기동될 시간 부여
+  initialDelaySeconds: 25  # ✅ Spring Boot 완전 기동까지 충분한 시간 제공
   periodSeconds: 10
   failureThreshold: 5
 
