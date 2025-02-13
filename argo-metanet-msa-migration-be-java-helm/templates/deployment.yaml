@@ -1,23 +1,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "metanet-msa-migration-be-java.fullname" . }}
+  name: {{ include "argo-metanet-msa-migration-be-java-helm.fullname" . }}
   namespace: {{ .Values.namespace }}
   labels:
-    app: {{ include "metanet-msa-migration-be-java.name" . }}
+    app: {{ include "argo-metanet-msa-migration-be-java-helm.name" . }}
 spec:
-  revisionHistoryLimit: 1
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      app: {{ include "metanet-msa-migration-be-java.name" . }}
+      app: {{ include "argo-metanet-msa-migration-be-java-helm.name" . }}
   template:
     metadata:
       labels:
-        app: {{ include "metanet-msa-migration-be-java.name" . }}
+        app: {{ include "argo-metanet-msa-migration-be-java-helm.name" . }}
     spec:
       containers:
-        - name: {{ .Chart.Name }}
+        - name: metanet-msa-migration-be-java
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
@@ -27,9 +26,5 @@ spec:
                 name: {{ .Values.configMap.name }}
             - secretRef:
                 name: {{ .Values.secret.name }}
-          livenessProbe: 
-            {{- toYaml .Values.livenessProbe | nindent 12 }}
-          readinessProbe:
-            {{- toYaml .Values.readinessProbe | nindent 12 }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
