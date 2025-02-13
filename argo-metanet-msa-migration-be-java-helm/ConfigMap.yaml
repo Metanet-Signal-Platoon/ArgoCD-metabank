@@ -1,9 +1,0 @@
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: metanet-msa-migration-be-java-config
-  namespace: metabank
-data:
-  DB_HOST: "10.0.1.8"
-  DB_PORT: "3306"
-  DB_DATABASE: "my_database"
