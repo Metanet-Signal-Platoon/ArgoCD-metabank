@@ -21,9 +21,9 @@ spec:
             valuesFile: values-prod.yaml
   template:
     metadata:
-      name: metanet-msa-migration-be-java-{{ .environment }}
+      name: metanet-msa-migration-be-java-{{ environment }}  # ✅ 환경 변수를 적용하는 방식 확인
     spec:
-      project: "{{ .project }}"
+      project: "{{ project }}"
       source:
         repoURL: https://github.com/Metanet-Signal-Platoon/ArgoCD-metabank.git
         targetRevision: main
@@ -31,10 +31,10 @@ spec:
         helm:
           valueFiles:
             - "values.yaml"
-            - "{{ .valuesFile }}"
+            - "{{ valuesFile }}"
       destination:
         server: https://kubernetes.default.svc
-        namespace: "{{ .namespace }}"
+        namespace: "{{ namespace }}"
       syncPolicy:
         automated:
           prune: true
