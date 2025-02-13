@@ -2,7 +2,7 @@ apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
   name: metanet-msa-list-service-set
-  namespace: argocd  # Argo CD가 설치된 네임스페이스
+  namespace: argocd
 spec:
   generators:
     - list:
@@ -21,19 +21,19 @@ spec:
             valuesFile: values-prod.yaml
   template:
     metadata:
-      name: metanet-msa-list-service-{{ env }}  # ✅ 수정: .Values.env → env 직접 사용
+      name: metanet-msa-list-service-{{ .Values.env }}  # ✅ Helm 스타일 적용
     spec:
-      project: "{{ project }}"  # ✅ 수정: 올바른 변수 참조 방식
+      project: "{{ .Values.project }}"  # ✅ Helm 스타일 적용
       source:
         repoURL: https://github.com/Metanet-Signal-Platoon/ArgoCD-metabank.git
-        targetRevision: main  # ✅ 모든 환경이 main 브랜치를 사용하도록 수정
+        targetRevision: main
         path: argo-metanet-msa-list-service-helm
         helm:
           valueFiles:
-            - "{{ valuesFile }}"  # ✅ 수정: 올바른 변수 참조 방식
+            - "{{ .Values.valuesFile }}"  # ✅ Helm 스타일 적용
       destination:
         server: https://kubernetes.default.svc
-        namespace: "{{ namespace }}"  # ✅ 수정: 올바른 변수 참조 방식
+        namespace: "{{ .Values.namespace }}"  # ✅ Helm 스타일 적용
       syncPolicy:
         automated:
           prune: true
