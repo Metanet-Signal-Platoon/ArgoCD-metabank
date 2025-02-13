@@ -7,7 +7,7 @@ data:
   default.conf: |
     {{- range .Values.backendServices }}
     upstream {{ .name }} {
-        server {{ .name }}.{{ .namespace | default $.Release.Namespace }}.svc.cluster.local:{{ .port }};
+        server {{ .name }}.{{ .namespace }}.svc.cluster.local:{{ .port }};
     }
     {{- end }}
 
