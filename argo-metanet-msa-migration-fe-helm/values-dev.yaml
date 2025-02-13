@@ -12,8 +12,8 @@ environment: dev
 # Image Pull Secrets (ACR 접근을 위한 설정, 필요시 추가)
 imagePullSecrets: []
 # 예시:
- imagePullSecrets:
-   - name: acr-secret
+# imagePullSecrets:
+#   - name: acr-secret
 
 # 서비스 계정 설정
 serviceAccount:
@@ -45,21 +45,21 @@ service:
 # 리소스 설정 (개발 환경 기준)
 resources:
   requests:
-    cpu: "250m"
-    memory: "512Mi"
+    cpu: 150m
+    memory: 128Mi
   limits:
-    cpu: "500m"
-    memory: "1024Mi"
+    cpu: 300m
+    memory: 512Mi
 
 # Liveness & Readiness Probes
 livenessProbe:
   httpGet:
     path: /
-    port: 8080
+    port: 80
 readinessProbe:
   httpGet:
     path: /
-    port: 8080
+    port: 80
 
 # 자동 확장 (선택)
 autoscaling:
