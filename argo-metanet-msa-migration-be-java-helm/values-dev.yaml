@@ -5,7 +5,7 @@ replicaCount: 1
 image:
   repository: metabank.azurecr.io/metanet-msa-migration-be-java
   pullPolicy: IfNotPresent
-  tag: "1739424586"
+  tag: "1739424983"
 
 environment: dev
 
