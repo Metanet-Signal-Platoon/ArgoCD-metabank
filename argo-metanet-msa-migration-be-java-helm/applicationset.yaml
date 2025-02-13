@@ -21,24 +21,24 @@ spec:
             valuesFile: values-prod.yaml
   template:
     metadata:
-      name: metanet-msa-migration-be-java-{{ .environment }}
+      name: metanet-msa-migration-be-java-{{ environment }}
     spec:
-      project: "{{ .project }}"
+      project: "{{ project }}"
       source:
         repoURL: https://github.com/Metanet-Signal-Platoon/ArgoCD-metabank.git
-        targetRevision: main  # ✅ 항상 main 브랜치를 사용
+        targetRevision: main
         path: argo-metanet-msa-migration-be-java-helm
         helm:
           valueFiles:
             - "values.yaml"
-            - "{{ .valuesFile }}"
+            - "{{ valuesFile }}"
       destination:
         server: https://kubernetes.default.svc
-        namespace: "{{ .namespace }}"
+        namespace: "{{ namespace }}"
       syncPolicy:
         automated:
-          prune: true
-          selfHeal: true
+          prune: true  # Git과 다르면 자동 삭제
+          selfHeal: true  # 클러스터 변경 시 자동 복구
         syncOptions:
           - CreateNamespace=true
           - ApplyOutOfSyncOnly=true
