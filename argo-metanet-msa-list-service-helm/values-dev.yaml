@@ -1,6 +1,7 @@
 # 환경 정보 (values.yaml에서 상속됨)
 environment: dev
 namespace: metabank-dev
+project: metabank-dev
 
 # Replica 설정 (dev 환경에서는 1개, 운영에서는 3개)
 replicaCount: 1
