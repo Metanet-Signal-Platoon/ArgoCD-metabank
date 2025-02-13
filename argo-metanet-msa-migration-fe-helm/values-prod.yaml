@@ -5,15 +5,15 @@ replicaCount: 1
 image:
   repository: metabank.azurecr.io/metanet-msa-migration-fe
   pullPolicy: IfNotPresent
-  tag: "1739373582"
+  tag: "1739373904"
 
-environment: prod
+environment: dev
 
 # Image Pull Secrets (ACR 접근을 위한 설정, 필요시 추가)
 imagePullSecrets: []
 # 예시:
- imagePullSecrets:
-   - name: acr-secret
+# imagePullSecrets:
+#   - name: acr-secret
 
 # 서비스 계정 설정
 serviceAccount:
@@ -35,8 +35,20 @@ securityContext: {}
 # Service 설정
 service:
   type: ClusterIP  # 내부 네트워크용
-  port: 80  # 포트 변경
-  
+  port: 8080  # 포트 변경
+
+# Ingress 설정 (선택)
+ingress:
+  enabled: true  # Ingress 활성화
+  className: "nginx"
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    nginx.ingress.kubernetes.io/rewrite-target: /
+  hosts:
+    - host: metanet-dev.example.com
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
   tls: []
   #  - secretName: chart-example-tls
   #    hosts:
@@ -67,6 +79,12 @@ autoscaling:
   minReplicas: 1
   maxReplicas: 5
   targetCPUUtilizationPercentage: 80
+
+# 추가 환경 변수 설정
+env:
+  ENVIRONMENT: dev
+  DATABASE_URL: "jdbc:mysql://metanet-db:3306/dev-db"
+  REDIS_HOST: "metanet-redis"
 
 # 노드 선택 및 Tolerations
 nodeSelector: {}
