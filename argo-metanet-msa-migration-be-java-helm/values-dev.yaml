@@ -13,8 +13,8 @@ env:
     value: "dev"
 
 # Image Pull Secrets (ACR 접근을 위한 설정, 필요시 추가)
-#imagePullSecrets:
-#  - name: acr-secret
+imagePullSecrets:
+  - name: acr-secret
 
 # 서비스 계정 설정
 serviceAccount:
@@ -55,12 +55,19 @@ resources:
 # Liveness & Readiness Probes
 livenessProbe:
   httpGet:
-    path: /
-    port: 8080  # ✅ Spring Boot 실행 포트에 맞춤
+    path: /actuator/health  # ✅ Spring Boot Actuator 헬스 체크 엔드포인트로 변경
+    port: 8080
+  initialDelaySeconds: 15  # ✅ 앱이 시작될 시간을 벌기 위해 초기 지연 추가
+  periodSeconds: 10
+  failureThreshold: 5
+
 readinessProbe:
   httpGet:
-    path: /
-    port: 8080  # ✅ Spring Boot 실행 포트에 맞춤
+    path: /actuator/health  # ✅ Readiness Probe도 Actuator 경로로 변경
+    port: 8080
+  initialDelaySeconds: 20  # ✅ Spring Boot 앱이 충분히 기동될 시간 부여
+  periodSeconds: 10
+  failureThreshold: 5
 
 # 자동 확장 (선택)
 autoscaling:
