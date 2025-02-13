@@ -3,7 +3,7 @@ replicaCount: 1
 
 # 컨테이너 이미지 설정 (Azure ACR 사용)
 image:
-  repository: metabank.azurecr.io/argo-metanet-msa-list-service
+  repository: metabank.azurecr.io/metanet-msa-list-service
   pullPolicy: IfNotPresent
   tag: "1739372665"
 
