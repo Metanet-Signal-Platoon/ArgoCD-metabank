@@ -106,14 +106,10 @@ secret:
     DB_USERNAME: "metanet"
     DB_PASSWORD: "Abcd1234!"
 
-# Canary 배포 설정 (Argo Rollouts 사용)
 canary:
   steps:
-    - setWeight: 10   # Canary 트래픽 10%
-    - pause: 
-        duration: 30s   # 30초 대기
-    - setWeight: 50   # Canary 트래픽 50%
-    - pause: 
-        duration: 30s   # 30초 대기
-    - setWeight: 100  # Canary 트래픽 100%로 변경 (기존 버전 제거)
+    - weight: 10   # Canary 트래픽 10%
+      pause: 30s   # 30초 대기
+    - weight: 50   # Canary 트래픽 50%
+      pause: 30s   # 30초 대기
 
