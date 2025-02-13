@@ -56,7 +56,18 @@ service:
   # This sets the ports more information can be found here: https://kubernetes.io/docs/concepts/services-networking/service/#field-spec-ports
   port: 80
 
-backendServices: []
+backendServices:
+  - name: metanet-msa-list-service
+    namespace: metabank-dev
+    port: 8080
+
+  - name: metanet-msa-migration-be-java
+    namespace: metabank-dev
+    port: 8080
+
+  - name: metanet-msa-migration-quiz-reward
+    namespace: metabank-dev
+    port: 8080
 
 # This block is for setting up the ingress for more information can be found here: https://kubernetes.io/docs/concepts/services-networking/ingress/
 ingress:
