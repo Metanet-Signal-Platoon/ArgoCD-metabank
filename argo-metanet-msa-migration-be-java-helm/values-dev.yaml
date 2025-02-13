@@ -35,10 +35,10 @@ securityContext: {}
 
 # Service 설정
 service:
-  type: ClusterIP  # 내부 네트워크용
-  port: 80  # 포트 변경
-  
-  tls: []
+  type: ClusterIP
+  port: 80  # ⚠️ 숫자로 직접 기입
+
+tls: []
   #  - secretName: chart-example-tls
   #    hosts:
   #      - metanet-dev.example.com
@@ -56,11 +56,11 @@ resources:
 livenessProbe:
   httpGet:
     path: /
-    port: {{ .Values.service.port }}
+    port: 80  # ⚠️ 직접 숫자로 입력
 readinessProbe:
   httpGet:
     path: /
-    port: {{ .Values.service.port }}
+    port: 80  # ⚠️ 직접 숫자로 입력
 
 # 자동 확장 (선택)
 autoscaling:
