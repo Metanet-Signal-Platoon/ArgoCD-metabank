@@ -21,19 +21,19 @@ spec:
             valuesFile: values-prod.yaml
   template:
     metadata:
-      name: metanet-msa-list-service-{{ .Values.env }}
+      name: metanet-msa-list-service-{{ env }}  # ✅ 수정: .Values.env → env 직접 사용
     spec:
-      project: "{{project}}"
+      project: "{{ project }}"  # ✅ 수정: 올바른 변수 참조 방식
       source:
         repoURL: https://github.com/Metanet-Signal-Platoon/ArgoCD-metabank.git
         targetRevision: main  # ✅ 모든 환경이 main 브랜치를 사용하도록 수정
         path: argo-metanet-msa-list-service-helm
         helm:
           valueFiles:
-            - "{{valuesFile}}"  # ✅ 환경별 values.yaml 적용
+            - "{{ valuesFile }}"  # ✅ 수정: 올바른 변수 참조 방식
       destination:
         server: https://kubernetes.default.svc
-        namespace: "{{namespace}}"
+        namespace: "{{ namespace }}"  # ✅ 수정: 올바른 변수 참조 방식
       syncPolicy:
         automated:
           prune: true
