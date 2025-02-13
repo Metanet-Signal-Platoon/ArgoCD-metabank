@@ -5,7 +5,7 @@ replicaCount: 1
 image:
   repository: metabank.azurecr.io/metanet-msa-migration-be-java
   pullPolicy: IfNotPresent
-  tag: "1739430998"
+  tag: "1739431343"
 
 # 환경 변수 설정
 env:
