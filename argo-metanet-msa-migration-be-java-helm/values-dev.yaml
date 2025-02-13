@@ -17,7 +17,7 @@ env:
     value: "always"
 
 # Image Pull Secrets (ACR 접근을 위한 설정, 필요시 추가)
-imagePullSecrets: []  # 필요하면 설정
+imagePullSecrets: []
 # imagePullSecrets:
 #   - name: acr-secret
 
@@ -40,6 +40,7 @@ securityContext: {}
 
 # Service 설정
 service:
+  name: metanet-msa-migration-be-java
   type: ClusterIP
   port: 8080  # ✅ Spring Boot 실행 포트에 맞춤
 
@@ -62,19 +63,21 @@ resources:
 # Liveness & Readiness Probes (Actuator 헬스 체크 활용)
 livenessProbe:
   httpGet:
-    path: /actuator/health  # ✅ Actuator health endpoint로 변경
+    path: /actuator/health/liveness  # ✅ `/liveness` 엔드포인트로 변경 (Spring Boot 3.x 권장)
     port: 8080
-  initialDelaySeconds: 20  # ✅ 애플리케이션 기동 고려
+  initialDelaySeconds: 15  # ✅ 애플리케이션 기동 고려 (최적화)
   periodSeconds: 10
-  failureThreshold: 5
+  timeoutSeconds: 3
+  failureThreshold: 3
 
 readinessProbe:
   httpGet:
-    path: /actuator/health  # ✅ Actuator health endpoint로 변경
+    path: /actuator/health/readiness  # ✅ `/readiness` 엔드포인트로 변경 (Spring Boot 3.x 권장)
     port: 8080
-  initialDelaySeconds: 25  # ✅ Spring Boot 완전 기동까지 충분한 시간 제공
+  initialDelaySeconds: 20  # ✅ Spring Boot 완전 기동까지 충분한 시간 제공
   periodSeconds: 10
-  failureThreshold: 5
+  timeoutSeconds: 3
+  failureThreshold: 3
 
 # 자동 확장 (선택)
 autoscaling:
@@ -87,3 +90,18 @@ autoscaling:
 nodeSelector: {}
 tolerations: []
 affinity: {}
+
+# ConfigMap 설정 (환경별 DB 정보)
+configMap:
+  name: metanet-msa-migration-be-java-config
+  data:
+    DB_HOST: "10.0.1.8"
+    DB_PORT: "3306"
+    DB_DATABASE: "my_database"
+
+# Secret 설정 (DB 자격 증명)
+secret:
+  name: metanet-msa-migration-be-java-secrets
+  data:
+    DB_USERNAME: "metanet"
+    DB_PASSWORD: "Abcd1234!"
