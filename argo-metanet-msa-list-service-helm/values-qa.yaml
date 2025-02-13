@@ -95,9 +95,9 @@ affinity: {}
 configMap:
   name: metanet-msa-list-service-config
   data:
-    DB_HOST: "10.0.1.8"
+    DB_HOST: "10.0.1.5"
     DB_PORT: "3306"
-    DB_DATABASE: "my_database"
+    DB_DATABASE: "list_data"
 
 # Secret 설정 (DB 자격 증명)
 secret:
