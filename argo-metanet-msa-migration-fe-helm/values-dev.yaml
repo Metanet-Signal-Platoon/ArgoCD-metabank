@@ -7,7 +7,7 @@ image:
   pullPolicy: IfNotPresent
   tag: "1739373904"
 
-environment: qa
+environment: dev
 
 # Image Pull Secrets (ACR 접근을 위한 설정, 필요시 추가)
 imagePullSecrets: []
