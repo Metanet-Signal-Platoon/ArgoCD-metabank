@@ -1,5 +1,5 @@
-apiVersion: argoproj.io/v1alpha1
-kind: Rollout
+apiVersion: apps/v1
+kind: Deployment
 metadata:
   name: {{ include "argo-metanet-msa-list-service-helm.fullname" . }}
   namespace: {{ .Values.namespace }}
@@ -28,12 +28,3 @@ spec:
                 name: {{ .Values.secret.name }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
-  strategy:
-    canary:
-      steps:
-        {{- range .Values.canary.steps }}
-        - setWeight: {{ .weight }}  # Canary 배포 비율 설정
-        - pause:
-            duration: {{ .pause }}  # 대기 시간 설정
-        {{- end }}
-        - setWeight: 100  # Canary 트래픽 100%로 변경 (기존 버전 제거)
