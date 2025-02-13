@@ -42,6 +42,20 @@ service:
   #    hosts:
   #      - metanet-dev.example.com
 
+# Backend Services 설정 (Nginx에서 백엔드로 프록시 가능하도록)
+backendServices:
+  - name: metanet-msa-list-service
+    namespace: metabank-dev
+    port: 8080
+
+  - name: metanet-msa-migration-be-java
+    namespace: metabank-dev
+    port: 8080
+
+  - name: metanet-msa-migration-quiz-reward
+    namespace: metabank-dev
+    port: 8080
+
 # 리소스 설정 (개발 환경 기준)
 resources:
   requests:
@@ -72,4 +86,3 @@ autoscaling:
 nodeSelector: {}
 tolerations: []
 affinity: {}
-
