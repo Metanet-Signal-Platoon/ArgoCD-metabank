@@ -32,7 +32,7 @@ spec:
     canary:
       steps:
         {{- range .Values.canary.steps }}
-        - setWeight: {{ .weight }}   # Canary 배포 비율 설정
+        - setWeight: {{ .weight }}  # Canary 배포 비율 설정
         - pause:
             duration: {{ .pause }}  # 대기 시간 설정
         {{- end }}
