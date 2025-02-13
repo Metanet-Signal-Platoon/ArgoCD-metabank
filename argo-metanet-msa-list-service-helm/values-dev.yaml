@@ -1,3 +1,7 @@
+# 환경 정보 (values.yaml에서 상속됨)
+environment: dev
+namespace: metabank-dev
+
 # Replica 설정 (dev 환경에서는 1개, 운영에서는 3개)
 replicaCount: 1
 
@@ -7,13 +11,9 @@ image:
   pullPolicy: IfNotPresent
   tag: "1739375182"
 
-environment: dev
-
 # Image Pull Secrets (ACR 접근을 위한 설정, 필요시 추가)
-imagePullSecrets: []
-# 예시:
- imagePullSecrets:
-   - name: acr-secret
+imagePullSecrets:
+  - name: acr-secret  # ✅ 값이 없을 경우 오류 방지
 
 # 서비스 계정 설정
 serviceAccount:
@@ -22,9 +22,11 @@ serviceAccount:
   annotations: {}
   name: ""
 
-# Pod Annotations & Labels
-podAnnotations: {}
-podLabels: {}
+# Pod Annotations & Labels (Helm에서 동적으로 추가 가능)
+podAnnotations:
+  environment: "dev"  # ✅ 환경 정보 추가
+podLabels:
+  environment: "dev"
 
 # Pod Security Context (선택)
 podSecurityContext: {}
@@ -36,7 +38,7 @@ securityContext: {}
 service:
   type: ClusterIP  # 내부 네트워크용
   port: 80  # 포트 변경
-  
+
   tls: []
   #  - secretName: chart-example-tls
   #    hosts:
@@ -72,3 +74,10 @@ autoscaling:
 nodeSelector: {}
 tolerations: []
 affinity: {}
+
+# 환경 변수 설정 (추가 가능)
+envVars:
+  - name: ENVIRONMENT
+    value: "dev"  # ✅ 환경 변수 추가
+  - name: SERVICE_NAME
+    value: "metanet-msa-list-service"
