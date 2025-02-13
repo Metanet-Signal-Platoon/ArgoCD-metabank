@@ -5,13 +5,18 @@ metadata:
   namespace: {{ .Release.Namespace }}
 data:
   default.conf: |
-    upstream backend {
-        server {{ .Values.backendService.name }}.{{ .Release.Namespace }}.svc.cluster.local:{{ .Values.backendService.port }};
+    {{- range .Values.backendServices }}
+    upstream {{ .name }} {
+        server {{ .name }}.{{ .namespace | default $.Release.Namespace }}.svc.cluster.local:{{ .port }};
     }
+    {{- end }}
 
     server {
         listen 80;
-        location / {
-            proxy_pass http://backend;
+        
+        {{- range .Values.backendServices }}
+        location /{{ .name }}/ {
+            proxy_pass http://{{ .name }};
         }
+        {{- end }}
     }
