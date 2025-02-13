@@ -21,7 +21,7 @@ spec:
             valuesFile: values-prod.yaml
   template:
     metadata:
-      name: metanet-msa-migration-be-java-{{ .environment }}-{{ .namespace }}  # ✅ 중복 방지
+      name: metanet-msa-migration-be-java-{{ .environment }}
     spec:
       project: "{{ .project }}"
       source:
