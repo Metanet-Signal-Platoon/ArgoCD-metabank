@@ -36,6 +36,11 @@ spec:
             - name: tls-secret
               mountPath: /etc/nginx/ssl
               readOnly: true
+          resources:
+            requests:
+              cpu: "150m"
+            limits:
+              cpu: "150m" 
       volumes:
         - name: tls-secret
           secret:
