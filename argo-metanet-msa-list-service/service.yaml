@@ -1,27 +1,11 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: metanet-msa-list-service-stable
+  name: metanet-msa-list-service
   namespace: metabank
 spec:
   selector:
     app: metanet-msa-list-service
-    rollouts-pod-template-hash: stable
-  ports:
-    - protocol: TCP
-      port: 8080
-      targetPort: 8080
-  type: ClusterIP
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: metanet-msa-list-service-canary
-  namespace: metabank
-spec:
-  selector:
-    app: metanet-msa-list-service
-    rollouts-pod-template-hash: canary
   ports:
     - protocol: TCP
       port: 8080
