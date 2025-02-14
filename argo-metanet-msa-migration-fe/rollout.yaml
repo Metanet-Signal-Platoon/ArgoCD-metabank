@@ -6,7 +6,7 @@ metadata:
   labels:
     app: metanet-msa-migration-fe
 spec:
-  replicas: 5
+  replicas: 1
   strategy:
     blueGreen:
       activeService: metanet-msa-migration-fe-active  # 운영 중인 서비스
