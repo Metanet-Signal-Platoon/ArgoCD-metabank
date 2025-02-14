@@ -12,7 +12,7 @@ spec:
       activeService: metanet-msa-migration-fe-active  # 운영 중인 서비스
       previewService: metanet-msa-migration-fe-preview  # 새 버전 서비스 (테스트용)
       autoPromotionEnabled: false  # 자동 배포 방지 (수동 프로모션)
-      autoPromotionSeconds: 600
+      autoPromotionSeconds: 60
   revisionHistoryLimit: 1
   selector:
     matchLabels:
