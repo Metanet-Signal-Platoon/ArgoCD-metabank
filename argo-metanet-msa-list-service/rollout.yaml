@@ -1,29 +1,16 @@
-apiVersion: argoproj.io/v1alpha1
-kind: Rollout
+apiVersion: apps/v1
+kind: Deployment
 metadata:
   name: metanet-msa-list-service
   namespace: metabank
   labels:
     app: metanet-msa-list-service
 spec:
-  replicas: 5
   revisionHistoryLimit: 1
+  replicas: 1
   selector:
     matchLabels:
       app: metanet-msa-list-service
-
-  strategy:
-    canary:
-      canaryService: metanet-msa-list-service-canary
-      stableService: metanet-msa-list-service-stable
-      steps:
-        - setWeight: 20
-        - pause:
-            duration: 30
-        - setWeight: 50
-        - pause:
-            duration: 60
-
   template:
     metadata:
       labels:
@@ -31,7 +18,7 @@ spec:
     spec:
       containers:
         - name: metanet-msa-list-service
-          image: ykim73094/metanet-msa-list-service:1739083894
+          image: ykim73094/metanet-msa-list-service:1739169886
           ports:
             - containerPort: 8080
           env:
@@ -40,12 +27,12 @@ spec:
             - name: PORT
               value: "8080"
           envFrom:
-            - configMapRef:
-                name: metanet-msa-list-service-config
-            - secretRef:
-                name: metanet-msa-list-service-secrets
+          - configMapRef:
+              name: metanet-msa-list-service-config
+          - secretRef:
+              name: metanet-msa-list-service-secrets
           resources:
             requests:
-              cpu: "150m"
+              cpu: "150m"  # 0.1 vCPU (기본적으로 낮게 설정)
             limits:
-              cpu: "250m"
+              cpu: "250m"  # 0.5 vCPU (최대 사용량 제한)
