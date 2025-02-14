@@ -45,3 +45,8 @@ spec:
         - name: tls-secret
           secret:
             secretName: istio-ingressgateway-certs
+      resources:
+            requests:
+              cpu: "150m"  # 0.1 vCPU (기본적으로 낮게 설정)
+            limits:
+              cpu: "150m"  # 0.5 vCPU (최대 사용량 제한)
