@@ -13,8 +13,8 @@ spec:
       previewService: metanet-msa-migration-fe-preview  # 새 버전 서비스 (테스트용)
       previewReplicaCount: 2
       autoPromotionEnabled: true  # 자동 배포 방지 (수동 프로모션)
-      autoPromotionSeconds: 60
-      scaleDownDelaySeconds: 30  # 🚀 블루 자동 삭제 (30초 후)
+      autoPromotionSeconds: 20
+      scaleDownDelaySeconds: 20  # 🚀 블루 자동 삭제 (30초 후)
   revisionHistoryLimit: 1  # 과거 리비전 1개만 유지
   selector:
     matchLabels:
