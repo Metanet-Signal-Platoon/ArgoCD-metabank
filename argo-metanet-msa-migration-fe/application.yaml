@@ -20,5 +20,6 @@ spec:
       - CreateNamespace=true  # 네임스페이스가 없을 경우 자동 생성
       - ApplyOutOfSyncOnly=true  # 변경된 리소스만 업데이트 (즉시 Synced 상태로 변경)
       - RefreshIntervalSeconds=2
+      - SyncIntervalSeconds=2
       - PrunePropagationPolicy=foreground  # 관련 리소스도 삭제
       - PruneLast=true  # 마지막에 남은 불필요한 리소스 삭제
