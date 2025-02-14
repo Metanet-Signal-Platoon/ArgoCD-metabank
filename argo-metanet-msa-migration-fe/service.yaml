@@ -1,7 +1,23 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: metanet-msa-migration-fe
+  name: metanet-msa-migration-fe-active
+  namespace: metabank
+spec:
+  selector:
+    app: metanet-msa-migration-fe
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+  type: ClusterIP
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: metanet-msa-migration-fe-preview
   namespace: metabank
 spec:
   selector:
