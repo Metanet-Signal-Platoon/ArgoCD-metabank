@@ -1,13 +1,18 @@
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: argoproj.io/v1alpha1
+kind: Rollout
 metadata:
   name: metanet-msa-migration-fe
   namespace: metabank
   labels:
     app: metanet-msa-migration-fe
 spec:
-  revisionHistoryLimit: 1
   replicas: 1
+  strategy:
+    blueGreen:
+      activeService: metanet-msa-migration-fe-active  # 운영 중인 서비스
+      previewService: metanet-msa-migration-fe-preview  # 새 버전 서비스 (테스트용)
+      autoPromotionEnabled: false  # 자동 배포 방지 (수동 프로모션)
+  revisionHistoryLimit: 1
   selector:
     matchLabels:
       app: metanet-msa-migration-fe
@@ -18,12 +23,12 @@ spec:
     spec:
       containers:
         - name: metanet-msa-migration-fe
-          image: ykim73094/metanet-msa-migration-fe:1739504024
+          image: ykim73094/metanet-msa-migration-fe:1739504024  # 초기 이미지
           ports:
             - containerPort: 80
           envFrom:
-          - configMapRef:
-              name: metanet-msa-migration-fe
+            - configMapRef:
+                name: metanet-msa-migration-fe
           volumeMounts:
             - name: tls-secret
               mountPath: /etc/nginx/ssl
